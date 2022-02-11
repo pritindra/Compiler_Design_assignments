@@ -19,20 +19,55 @@ enum
         TOK_NUM,
         TOK_ALPHA,
         TOK_ID,
-        TOK_EOF
+        TOK_EOF,
+        TOK_IDENTIFIER,
+        TOK_INTEGER
     };
-int count = 0;
+int tokCount = 0;
+char string[20];
 %}
 
 %%
-\n      {return 0;}
-^LOAD {printf("%d", TOK_LOAD);
-        count++;}
+end      {return 0;}
+"LOAD" {printf("%d", TOK_LOAD);
+        tokCount++;}
+
+"ADD" {printf("%d ", TOK_ADD);
+        tokCount++;}
+"SUB" {printf("%d ", TOK_SUB);
+        tokCount++;}
+"STORE" {printf("%d ", TOK_STORE);
+        tokCount++;}
+"DIV" {printf("%d ", TOK_DIV);
+        tokCount++;}
+"READ" {printf("%d ", TOK_READ);
+        tokCount++;}
+"PRINT" {printf("%d ", TOK_PRINT);
+        tokCount++;}
+[,]     {printf("%d ", TOK_COMMA);
+        tokCount++;}
+
+[a-zA-Z][_a-zA-Z0-9]*   {printf("%d ", TOK_IDENTIFIER);
+                        strcpy(string,yytext);
+                        printf("(%s) ", string);
+                        tokCount++;}
+[1-9][0-9]* {printf("%d ", TOK_INTEGER);
+            strcpy(string, yytext);
+            printf("(%s) ", string);
+            tokCount++;}
+[ \t\n] ;
+
+.   {printf("Unxpected char\n");}
 %%
 
 int yywrap(){}
-int main () {
+int main (int argc, char *argv[]) {
+    FILE *fp;
+    char filename[50];
+    fp = fopen(argv[1], "r");
+    yyin = fp;
+
     yylex();
-    printf("Number of tokens: %d", count);
+    printf("Number of tokens: %d\n", tokCount);
     return 0;
 }

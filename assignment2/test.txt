@@ -1,0 +1,2 @@
+ADD R , 8
+LOAD R1, R
