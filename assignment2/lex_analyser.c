@@ -3,18 +3,47 @@
 #include "token.h"
 
 // global variables
-extern FILE *fptr;
+#define MAX 1000
+
 char tokstr[100];
+extern FILE *fptr;
 
 // global functions
 char *getstr(int n);
 void *ungetstr(char str[]);
+int getlines(char *line, FILE *ptr);
+int token_analyser();
 
-int token_analyser () {
-    int i = 0;
+// main function
+int main(int argc, char *argv[]) {
+    char outstr[MAX];
+    fptr = open(argv[1], "r");
+
+    char lines[MAX];
+    int len, i = 0;
+
+    while ((len = getlines(lines, fptr)) > 0) {
+        i++;
+    }
+
+    for (i = 0; i < strlen(lines); i++) {
+        
+    }
+
+}
+
+int getlines (char *line, FILE *ptr) {
+    if (fgets(line, MAX, fptr) == NULL)
+        return 0;
+    else
+        return strlen(line);
+}
+
+int token_analyser (char *line) {
+    int i = 0, j = 0;
     int ch;
     
-    while ((ch = fgetc(fptr)) != EOF) {
+    while ((ch = line[j]) != strlen(line)) {
         switch(ch) {
             case ';':
                     return (TOK_SEMICOLON);
@@ -177,7 +206,11 @@ int token_analyser () {
                         break;
                         
                     ungetstr(ch1); 
+
+            default:
+                
         }
+    j++;
     }
 }
 
