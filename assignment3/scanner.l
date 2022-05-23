@@ -1,4 +1,7 @@
 %{
+
+#include "mnemonic.h"
+
 enum 
     {
         TOK_STOP = 0,
@@ -20,7 +23,8 @@ enum
         TOK_ID,
         TOK_EOF,
         TOK_IDENTIFIER,
-        TOK_INTEGER
+        TOK_INTEGER,
+        TOK_NEWLINE
     };
 int tokCount = 0;
 char string[20];
@@ -29,32 +33,63 @@ char string[20];
 %%
 end      {return 0;}
 "LOAD" {printf("%d", TOK_LOAD);
-        tokCount++;}
+        string[tokCount] = TOK_LOAD;
+        tokCount++;
+        insert("LOAD", TOK_LOAD);}
 
 "ADD" {printf("%d ", TOK_ADD);
-        tokCount++;}
+        string[tokCount] = TOK_ADD;
+        tokCount++;
+        insert("ADD", TOK_ADD);}
+
 "SUB" {printf("%d ", TOK_SUB);
-        tokCount++;}
+        string[tokCount] = TOK_SUB;
+        tokCount++;
+        insert("SUB", TOK_SUB);}
+        
 "STORE" {printf("%d ", TOK_STORE);
-        tokCount++;}
+        string[tokCount] = TOK_STORE;
+        tokCount++;
+        insert("STORE", TOK_STORE);}
+
 "DIV" {printf("%d ", TOK_DIV);
-        tokCount++;}
+        string[tokCount] = TOK_DIV;
+        tokCount++;
+        insert("DIV", TOK_DIV);}
+
 "READ" {printf("%d ", TOK_READ);
-        tokCount++;}
+        string[tokCount] = TOK_READ;
+        tokCount++;
+        insert("READ", TOK_READ);}
+
 "PRINT" {printf("%d ", TOK_PRINT);
-        tokCount++;}
+        tokCount++;
+        insert("PRINT", TOK_PRINT);}
+
 "STOP" {printf("%d ", TOK_STOP);
-        tokCount++;}
+        tokCount++;
+        insert("STOP", TOK_STOP);}
+
 "MULT" {printf("%d ", TOK_MULT);
-        tokCount++;}
+        tokCount++;
+        insert("MULT", TOK_MULT);}
+
 "TRANS" {printf("%d ", TOK_TRANS);
-        tokCount++;}
+        tokCount++;
+        insert("TRANS", TOK_TRANS);}
+
 "TRIM" {printf("%d ", TOK_TRIM);
-        tokCount++;}
+        tokCount++;
+        insert("TRIM", TOK_TRIM);}
+
 "LIR" {printf("%d ", TOK_LIR);
-        tokCount++;}
+        tokCount++;
+        insert("LIR", TOK_LIR);}
+
 "IIR" {printf("%d ", TOK_IIR);
-        tokCount++;}
+        tokCount++;
+        insert("IIR", TOK_IIR);}
+
 "LOOP" {printf("%d ", TOK_LOOP);
         tokCount++;}
 [,]     {printf("%d ", TOK_COMMA);
@@ -70,7 +105,11 @@ end      {return 0;}
             strcpy(string, yytext);
             printf("(%s) ", string);
             tokCount++;}
-[ \t\n] ;
+[ \t] ;
+[\n]    {printf("%d ", TOK_NEWLINE);
+        string[tokCount] = TOK_LOAD;
+        tokCount++;
+        }
 
 .   {printf("Unxpected char\n");}
 %%
@@ -84,5 +123,10 @@ int main (int argc, char *argv[]) {
 
     yylex();
     printf("Number of tokens: %d\n", tokCount);
+    display();
+
+    for (int i = 0; i < sizeof(string); i++) {
+        printf("%d ", string[i]);
+    }
     return 0;
 }

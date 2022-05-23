@@ -351,8 +351,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 22
-#define YY_END_OF_BUFFER 23
+#define YY_NUM_RULES 23
+#define YY_END_OF_BUFFER 24
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -362,7 +362,7 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[62] =
     {   0,
-        0,    0,   23,   21,   20,   20,   16,   19,   17,   17,
+        0,    0,   24,   22,   20,   21,   16,   19,   17,   17,
        17,   17,   17,   17,   17,   17,   17,   17,   17,   17,
        19,   18,   18,   18,   18,   18,   18,   18,   18,   18,
        18,   18,   18,   18,    3,    6,   14,   13,   18,   18,
@@ -478,6 +478,9 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "scanner.l"
 #line 2 "scanner.l"
+
+#include "mnemonic.h"
+
 enum 
     {
         TOK_STOP = 0,
@@ -499,12 +502,13 @@ enum
         TOK_ID,
         TOK_EOF,
         TOK_IDENTIFIER,
-        TOK_INTEGER
+        TOK_INTEGER,
+        TOK_NEWLINE
     };
 int tokCount = 0;
 char string[20];
-#line 507 "lex.yy.c"
-#line 508 "lex.yy.c"
+#line 511 "lex.yy.c"
+#line 512 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -721,9 +725,9 @@ YY_DECL
 		}
 
 	{
-#line 29 "scanner.l"
+#line 33 "scanner.l"
 
-#line 727 "lex.yy.c"
+#line 731 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -782,108 +786,127 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 30 "scanner.l"
+#line 34 "scanner.l"
 {return 0;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 31 "scanner.l"
+#line 35 "scanner.l"
 {printf("%d", TOK_LOAD);
-        tokCount++;}
+        string[tokCount] = TOK_LOAD;
+        tokCount++;
+        insert("LOAD", TOK_LOAD);}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 34 "scanner.l"
+#line 40 "scanner.l"
 {printf("%d ", TOK_ADD);
-        tokCount++;}
+        string[tokCount] = TOK_ADD;
+        tokCount++;
+        insert("ADD", TOK_ADD);}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 36 "scanner.l"
+#line 45 "scanner.l"
 {printf("%d ", TOK_SUB);
-        tokCount++;}
+        string[tokCount] = TOK_SUB;
+        tokCount++;
+        insert("SUB", TOK_SUB);}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 38 "scanner.l"
+#line 50 "scanner.l"
 {printf("%d ", TOK_STORE);
-        tokCount++;}
+        string[tokCount] = TOK_STORE;
+        tokCount++;
+        insert("STORE", TOK_STORE);}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 40 "scanner.l"
+#line 55 "scanner.l"
 {printf("%d ", TOK_DIV);
-        tokCount++;}
+        string[tokCount] = TOK_DIV;
+        tokCount++;
+        insert("DIV", TOK_DIV);}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 42 "scanner.l"
+#line 60 "scanner.l"
 {printf("%d ", TOK_READ);
-        tokCount++;}
+        string[tokCount] = TOK_READ;
+        tokCount++;
+        insert("READ", TOK_READ);}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 44 "scanner.l"
+#line 65 "scanner.l"
 {printf("%d ", TOK_PRINT);
-        tokCount++;}
+        tokCount++;
+        insert("PRINT", TOK_PRINT);}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 46 "scanner.l"
+#line 69 "scanner.l"
 {printf("%d ", TOK_STOP);
-        tokCount++;}
+        tokCount++;
+        insert("STOP", TOK_STOP);}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 48 "scanner.l"
+#line 73 "scanner.l"
 {printf("%d ", TOK_MULT);
-        tokCount++;}
+        tokCount++;
+        insert("MULT", TOK_MULT);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 50 "scanner.l"
+#line 77 "scanner.l"
 {printf("%d ", TOK_TRANS);
-        tokCount++;}
+        tokCount++;
+        insert("TRANS", TOK_TRANS);}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 52 "scanner.l"
+#line 81 "scanner.l"
 {printf("%d ", TOK_TRIM);
-        tokCount++;}
+        tokCount++;
+        insert("TRIM", TOK_TRIM);}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 54 "scanner.l"
+#line 85 "scanner.l"
 {printf("%d ", TOK_LIR);
-        tokCount++;}
+        tokCount++;
+        insert("LIR", TOK_LIR);}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 56 "scanner.l"
+#line 89 "scanner.l"
 {printf("%d ", TOK_IIR);
-        tokCount++;}
+        tokCount++;
+        insert("IIR", TOK_IIR);}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 58 "scanner.l"
+#line 93 "scanner.l"
 {printf("%d ", TOK_LOOP);
         tokCount++;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 60 "scanner.l"
+#line 95 "scanner.l"
 {printf("%d ", TOK_COMMA);
         tokCount++;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 63 "scanner.l"
+#line 98 "scanner.l"
 {printf("%d", TOK_ALPHA);
             tokCount++;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 65 "scanner.l"
+#line 100 "scanner.l"
 {printf("%d ", TOK_IDENTIFIER);
                         strcpy(string,yytext);
                         printf("(%s) ", string);
@@ -891,29 +914,37 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 69 "scanner.l"
+#line 104 "scanner.l"
 {printf("%d ", TOK_INTEGER);
             strcpy(string, yytext);
             printf("(%s) ", string);
             tokCount++;}
 	YY_BREAK
 case 20:
-/* rule 20 can match eol */
 YY_RULE_SETUP
-#line 73 "scanner.l"
+#line 108 "scanner.l"
 ;
 	YY_BREAK
 case 21:
+/* rule 21 can match eol */
 YY_RULE_SETUP
-#line 75 "scanner.l"
-{printf("Unxpected char\n");}
+#line 109 "scanner.l"
+{printf("%d ", TOK_NEWLINE);
+        string[tokCount] = TOK_LOAD;
+        tokCount++;
+        }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 76 "scanner.l"
+#line 114 "scanner.l"
+{printf("Unxpected char\n");}
+	YY_BREAK
+case 23:
+YY_RULE_SETUP
+#line 115 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 917 "lex.yy.c"
+#line 948 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1918,7 +1949,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 76 "scanner.l"
+#line 115 "scanner.l"
 
 
 int yywrap(){}
@@ -1930,6 +1961,11 @@ int main (int argc, char *argv[]) {
 
     yylex();
     printf("Number of tokens: %d\n", tokCount);
+    display();
+
+    for (int i = 0; i < sizeof(string); i++) {
+        printf("%d ", string[i]);
+    }
     return 0;
 }
 
